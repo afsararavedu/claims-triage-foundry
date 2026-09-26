@@ -1,0 +1,177 @@
+18:20:18 [AGENT]   Claims Triage Supervisor: registered (mock) with tools ['search_underwriting_knowledge', 'get_policyholder_history', 'get_claim_triage_record', 'get_session_overview', 'remember_adjuster_note']
+18:20:18 [AGENT]   Intake & Validation Agent: registered (mock) with tools ['load_claims_batch', 'validate_claims']
+18:20:18 [AGENT]   Anomaly & Coverage Agent: registered (mock) with tools ['check_policy_coverage', 'assess_fraud_indicators', 'search_underwriting_knowledge'] + file_search(local vector store)
+18:20:18 [AGENT]   Adjuster Briefing Agent: registered (mock) with tools ['search_underwriting_knowledge', 'get_policyholder_history', 'recommend_next_action', 'get_claim_triage_record']
+
++--------------------------------------------------------------+
+|  Claims Triage Assistant - multi-agent (Azure AI Foundry)    |
+|  backend: mock     hitl: auto         session: s-493c8cf1  |
+|  type 'help' for examples, 'exit' to quit                    |
++--------------------------------------------------------------+
+
+======================================================================
+handler> triage data/claims.json
+18:20:18 [ROUTER]  intent=triage_batch args={'source_path': 'data/claims.json'} (triage keyword)
+18:20:18 [STEP]    === triage run 20260924-182018-f89326 on data/claims.json (backend=mock) ===
+18:20:18 [STEP]    START -> INTAKE
+18:20:18 [TOOL]    intake_validation -> load_claims_batch(source_path='data/claims.json')
+18:20:18 [AGENT]   intake_validation [ingest] done; tools used: ['load_claims_batch']
+18:20:18 [STEP]    checkpoint ok: 4 claims loaded
+18:20:18 [STEP]    INTAKE -> VALIDATE
+18:20:18 [TOOL]    intake_validation -> validate_claims()
+18:20:18 [AGENT]   intake_validation [validate] done; tools used: ['validate_claims']
+18:20:18 [STEP]    checkpoint ok: 4 validated, 1 with issues
+18:20:18 [STEP]    VALIDATE -> GATE_VALIDATION
+
+=== HITL GATE 1: intake validation review ===
+  [ok] C-2031     no issues
+  [ok] C-2032     no issues
+  [ok] C-2033     no issues
+  [!!] C-2034     missing_required_field, invalid_amount
+18:20:18 [GATE]    gate 1 auto-continued (HITL mode=auto)
+18:20:18 [GATE]    gate 1 decision: auto
+18:20:18 [STEP]    GATE_VALIDATION -> COVERAGE
+18:20:18 [TOOL]    anomaly_coverage -> check_policy_coverage(claim_id='C-2031')
+18:20:18 [TOOL]    anomaly_coverage -> assess_fraud_indicators(claim_id='C-2031')
+18:20:18 [KNOWLEDGE] C-2031: 1 rule(s) matched ['UW-004']; patterns ['FI-03', 'FI-05']
+18:20:18 [AGENT]   anomaly_coverage [assess C-2031] done; tools used: ['check_policy_coverage', 'assess_fraud_indicators']
+18:20:18 [TOOL]    anomaly_coverage -> check_policy_coverage(claim_id='C-2032')
+18:20:18 [TOOL]    anomaly_coverage -> assess_fraud_indicators(claim_id='C-2032')
+18:20:18 [KNOWLEDGE] C-2032: 1 rule(s) matched ['UW-004']; patterns ['FI-03', 'FI-05']
+18:20:18 [AGENT]   anomaly_coverage [assess C-2032] done; tools used: ['check_policy_coverage', 'assess_fraud_indicators']
+18:20:18 [TOOL]    anomaly_coverage -> check_policy_coverage(claim_id='C-2033')
+18:20:18 [TOOL]    anomaly_coverage -> assess_fraud_indicators(claim_id='C-2033')
+18:20:18 [KNOWLEDGE] C-2033: 5 rule(s) matched ['UW-001', 'UW-002', 'UW-005', 'UW-006', 'UW-008']; patterns ['FI-01', 'FI-02']
+18:20:18 [AGENT]   anomaly_coverage [assess C-2033] done; tools used: ['check_policy_coverage', 'assess_fraud_indicators']
+18:20:18 [TOOL]    anomaly_coverage -> check_policy_coverage(claim_id='C-2034')
+18:20:18 [TOOL]    anomaly_coverage -> assess_fraud_indicators(claim_id='C-2034')
+18:20:18 [KNOWLEDGE] C-2034: 0 rule(s) matched []; patterns ['FI-01', 'FI-06']
+18:20:18 [AGENT]   anomaly_coverage [assess C-2034] done; tools used: ['check_policy_coverage', 'assess_fraud_indicators']
+18:20:18 [STEP]    COVERAGE -> BRIEFING
+18:20:18 [TOOL]    adjuster_briefing -> get_policyholder_history(policy_number='POL-5521', exclude_claim_id='C-2031')
+18:20:18 [TOOL]    adjuster_briefing -> recommend_next_action(claim_id='C-2031')
+18:20:18 [AGENT]   adjuster_briefing [brief C-2031] done; tools used: ['get_policyholder_history', 'recommend_next_action']
+18:20:18 [TOOL]    adjuster_briefing -> get_policyholder_history(policy_number='POL-5521', exclude_claim_id='C-2032')
+18:20:18 [TOOL]    adjuster_briefing -> recommend_next_action(claim_id='C-2032')
+18:20:18 [AGENT]   adjuster_briefing [brief C-2032] done; tools used: ['get_policyholder_history', 'recommend_next_action']
+18:20:18 [TOOL]    adjuster_briefing -> get_policyholder_history(policy_number='POL-9981', exclude_claim_id='C-2033')
+18:20:18 [TOOL]    adjuster_briefing -> recommend_next_action(claim_id='C-2033')
+18:20:18 [AGENT]   adjuster_briefing [brief C-2033] done; tools used: ['get_policyholder_history', 'recommend_next_action']
+18:20:18 [TOOL]    adjuster_briefing -> get_policyholder_history(policy_number='POL-4410', exclude_claim_id='C-2034')
+18:20:18 [TOOL]    adjuster_briefing -> recommend_next_action(claim_id='C-2034')
+18:20:18 [AGENT]   adjuster_briefing [brief C-2034] done; tools used: ['get_policyholder_history', 'recommend_next_action']
+18:20:18 [STEP]    BRIEFING -> GATE_REVIEW
+
+=== HITL GATE 2: adjuster review of recommendations ===
+  C-2031     ROUTE TO INVESTIGATOR        UW-004
+  C-2032     ROUTE TO INVESTIGATOR        UW-004
+  C-2033     ROUTE TO INVESTIGATOR        UW-001, UW-002, UW-005, UW-006, UW-008
+  C-2034     REQUEST MORE DOCUMENTATION   missing_required_field, invalid_amount, coverage_unverifiable
+18:20:18 [GATE]    gate 2 auto-accepted (HITL mode=auto)
+18:20:18 [GATE]    gate 2 decision: auto
+18:20:18 [STEP]    GATE_REVIEW -> PERSIST
+18:20:18 [MEMORY]  long-term memory <- outcome for C-2031 (route_to_investigator)
+18:20:18 [MEMORY]  long-term memory <- outcome for C-2032 (route_to_investigator)
+18:20:18 [MEMORY]  long-term memory <- outcome for C-2033 (route_to_investigator)
+18:20:18 [MEMORY]  long-term memory <- outcome for C-2034 (request_more_documentation)
+18:20:18 [STEP]    PERSIST -> DONE
+18:20:18 [STEP]    === run 20260924-182018-f89326 finished: DONE (trace: <project>/runs/20260924-182018-f89326/trace.jsonl) ===
+
+assistant> Triage run 20260924-182018-f89326 complete (4 claims).
+  - C-2031    ROUTE TO INVESTIGATOR
+  - C-2032    ROUTE TO INVESTIGATOR
+  - C-2033    ROUTE TO INVESTIGATOR
+  - C-2034    REQUEST MORE DOCUMENTATION
+Report: <project>/runs/20260924-182018-f89326/triage_report.md
+
+======================================================================
+handler> why was claim C2031 flagged?
+18:20:18 [ROUTER]  intent=explain_claim args={'claim_id': 'C-2031', 'question': 'why was claim C2031 flagged?'} (claim id mentioned)
+18:20:18 [TOOL]    adjuster_briefing -> get_claim_triage_record(claim_id='C-2031')
+18:20:18 [TOOL]    adjuster_briefing -> search_underwriting_knowledge(query='UW-004', top_k=2)
+18:20:18 [KNOWLEDGE] search 'UW-004' -> ['UW-004', 'FI-03']
+
+assistant> C-2031 (current session): recommendation ROUTE TO INVESTIGATOR, adjuster decision ROUTE TO INVESTIGATOR.
+- UW-004: Repeat peril on the same policy: prior_similar_claims_12m=2 >= 1 [severity high, source underwriting_rules.md#UW-004]
+- Prior claims considered: C-1804 (water_damage, 2025-09-02, long term memory), C-2032 (water_damage, 2026-02-10, current batch)
+Documents to request: the repair invoice for the earlier claim and a cause-of-loss report (e.g. plumber's report).
+Grounding from the knowledge base:
+  [UW-004 - underwriting_rules.md] A second claim of the same peril type (for example a second water-damage claim) on the same policy within 12 months should be reviewed for unrepaired prior damage, maintenance neglect, or double-claiming the same damage.
+  [FI-03 - fraud_indicators.md] Pattern: repeated water-damage claims on the same property within a year. Common causes are unrepaired earlier damage being claimed again, or chronic leaks (gradual damage is typically excluded). Investigators ask for the repair invoice from the earlier claim ...
+
+======================================================================
+handler> what documents do we need for it?
+18:20:18 [ROUTER]  intent=explain_claim args={'claim_id': 'C-2031', 'question': 'what documents do we need for it?'} (follow-up resolved to focus claim C-2031)
+18:20:18 [TOOL]    adjuster_briefing -> get_claim_triage_record(claim_id='C-2031')
+18:20:18 [TOOL]    adjuster_briefing -> search_underwriting_knowledge(query='UW-004', top_k=2)
+18:20:18 [KNOWLEDGE] search 'UW-004' -> ['UW-004', 'FI-03']
+
+assistant> C-2031 (current session): recommendation ROUTE TO INVESTIGATOR, adjuster decision ROUTE TO INVESTIGATOR.
+Documents to request: the repair invoice for the earlier claim and a cause-of-loss report (e.g. plumber's report).
+- UW-004: Repeat peril on the same policy: prior_similar_claims_12m=2 >= 1 [severity high, source underwriting_rules.md#UW-004]
+- Prior claims considered: C-1804 (water_damage, 2025-09-02, long term memory), C-2032 (water_damage, 2026-02-10, current batch)
+Grounding from the knowledge base:
+  [UW-004 - underwriting_rules.md] A second claim of the same peril type (for example a second water-damage claim) on the same policy within 12 months should be reviewed for unrepaired prior damage, maintenance neglect, or double-claiming the same damage.
+  [FI-03 - fraud_indicators.md] Pattern: repeated water-damage claims on the same property within a year. Common causes are unrepaired earlier damage being claimed again, or chronic leaks (gradual damage is typically excluded). Investigators ask for the repair invoice from the earlier claim ...
+
+======================================================================
+handler> show the history for POL-5521
+18:20:18 [ROUTER]  intent=policy_history args={'policy_number': 'POL-5521'} (policy + history keyword)
+18:20:18 [TOOL]    adjuster_briefing -> get_policyholder_history(policy_number='POL-5521')
+
+assistant> History for POL-5521:
+- C-1804 water_damage $6,100 loss 2025-09-02: route_to_investigator - Washing-machine hose failure; flagged for repeat water-damage pattern review.
+- C-2031 water_damage $8,500 loss 2026-08-15: route_to_investigator - Pipe burst in kitchen; findings: UW-004
+- C-2032 water_damage $4,200 loss 2026-02-10: route_to_investigator - Basement flooding; findings: UW-004
+- Note (2025-09-12): Policyholder installed a leak detector after C-1804 (per adjuster call).
+- In the current batch: C-2031 (water_damage), C-2032 (water_damage)
+
+======================================================================
+handler> what is the rule for claims right after policy inception?
+18:20:18 [ROUTER]  intent=knowledge_question args={'question': 'what is the rule for claims right after policy inception?'} (knowledge keyword)
+18:20:18 [TOOL]    anomaly_coverage -> search_underwriting_knowledge(query='what is the rule for claims right after policy inception?', top_k=3)
+18:20:18 [KNOWLEDGE] search 'what is the rule for claims right after policy inception?' -> ['UW-001', 'FI-01', 'UW-009']
+
+assistant> From the knowledge base (question: "what is the rule for claims right after policy inception?"):
+- [UW-001] UW-001 — Early claim after policy inception: - **Condition:** `days_since_inception <= 7` - **Severity:** high - **Action:** route_to_investigator - **Rationale:** Claims filed within 7 days of policy inception are flagged for review regardless of amount. Early-inception losses are a classic indicator of a policy bought after the loss occurred...
+- [FI-01] FI-01 — Inception fraud ("buy after the loss"): Pattern: the policy starts days before a large theft or fire claim. In the synthetic history set, 4 of 5 claims filed within a week of inception were withdrawn once a police report or proof of ownership was requested. Investigators check the purchase channel, the prior insurer and whether the proper...
+- [UW-009] UW-009 — High claim frequency: - **Condition:** `prior_claims_12m >= 3` - **Severity:** high - **Action:** route_to_investigator - **Rationale:** Three or more claims of any type on the same policy within 12 months indicates a frequency pattern that should be reviewed by special investigations.
+
+======================================================================
+handler> remember for POL-9981: policyholder says the jewelry was listed on a scheduled-items rider
+18:20:18 [ROUTER]  intent=remember_note args={'policy_number': 'POL-9981', 'note': 'policyholder says the jewelry was listed on a scheduled-items rider'} (explicit remember request)
+18:20:18 [TOOL]    supervisor -> remember_adjuster_note(policy_number='POL-9981', note='policyholder says the jewelry was listed on a scheduled-items rider')
+18:20:18 [MEMORY]  long-term memory <- note for POL-9981
+
+assistant> Noted for POL-9981: "policyholder says the jewelry was listed on a scheduled-items rider"
+
+======================================================================
+handler> summary
+18:20:18 [ROUTER]  intent=supervisor args={'message': 'summary'} (no deterministic match -> supervisor agent)
+18:20:18 [TOOL]    supervisor -> get_session_overview()
+
+assistant> Latest run (data/claims.json):
+- C-2031: route_to_investigator
+- C-2032: route_to_investigator
+- C-2033: route_to_investigator
+- C-2034: request_more_documentation
+Counts: {'route_to_investigator': 3, 'request_more_documentation': 1}
+
+======================================================================
+handler> why was C-2034 flagged?
+18:20:18 [ROUTER]  intent=explain_claim args={'claim_id': 'C-2034', 'question': 'why was C-2034 flagged?'} (claim id mentioned)
+18:20:18 [TOOL]    adjuster_briefing -> get_claim_triage_record(claim_id='C-2034')
+18:20:18 [TOOL]    adjuster_briefing -> search_underwriting_knowledge(query='coverage_unverifiable missing_required_field invalid_amount', top_k=2)
+18:20:18 [KNOWLEDGE] search 'coverage_unverifiable missing_required_field invalid_amount' -> ['decision_policy#4', 'decision_policy#1']
+
+assistant> C-2034 (current session): recommendation REQUEST MORE DOCUMENTATION, adjuster decision REQUEST MORE DOCUMENTATION.
+- Intake: 'loss_date' is missing or empty (missing_required_field)
+- Intake: claim_amount must be > 0 (got 0) (invalid_amount)
+- Coverage: loss date missing - cannot confirm the loss is within the policy period 2024-01-01..2026-01-01; note the report date 2026-08-20 is after the policy expired on 2026-01-01 (coverage_unverifiable)
+- Coverage: claim amount missing/invalid - cannot check the policy limit (coverage_unverifiable)
+Documents to request: the missing claim fields; a valid claimed amount with an itemised estimate; the details needed to verify coverage (loss date / amount).
+Grounding from the knowledge base:
+  [decision_policy#4 - decision_policy.md] | finding_code | action | note | |---------------------------|----------------------------|---------------------------------------------------| | missing_required_field | request_more_documentation | Ask the policyholder for the missing fields. | | invalid_amo...
+  [decision_policy#1 - decision_policy.md] - `auto_approve` — no findings of medium or high severity and the amount is under the ceiling. - `request_more_documentation` — the claim is incomplete or needs evidence before a decision. - `route_to_investigator` — a coverage problem or a high-severity fraud...
+
+Demo complete. Session s-493c8cf1 saved; long-term memory at <project>/.memory/long_term_memory.json

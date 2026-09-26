@@ -1,0 +1,5 @@
+{
+  "_comment": "SYNTHETIC. Which claim (peril) types each coverage product covers. Used by check_policy_coverage.",
+  "homeowners": ["water_damage", "fire", "theft", "wind", "hail", "vandalism", "liability"],
+  "auto": ["collision", "comprehensive", "theft", "glass", "liability"]
+}

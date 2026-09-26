@@ -1,0 +1,14 @@
+{
+  "_comment": "SYNTHETIC long-term memory seed. Simulates outcomes from earlier triage sessions. Copied to .memory/long_term_memory.json on first run or on `reset-memory`.",
+  "claims_history": [
+    {"claim_id": "C-1804", "policy_number": "POL-5521", "claim_type": "water_damage", "loss_date": "2025-09-02", "claim_amount": 6100,
+     "recommended_action": "route_to_investigator", "final_action": "route_to_investigator", "flags": ["UW-004"],
+     "summary": "Washing-machine hose failure; flagged for repeat water-damage pattern review.", "recorded_at": "2025-09-05T10:12:00Z", "source": "seed"},
+    {"claim_id": "C-1950", "policy_number": "POL-4410", "claim_type": "fire", "loss_date": "2025-06-14", "claim_amount": 2300,
+     "recommended_action": "auto_approve", "final_action": "auto_approve", "flags": [],
+     "summary": "Small stovetop fire, documented with photos; approved.", "recorded_at": "2025-06-20T09:00:00Z", "source": "seed"}
+  ],
+  "adjuster_notes": [
+    {"policy_number": "POL-5521", "note": "Policyholder installed a leak detector after C-1804 (per adjuster call).", "recorded_at": "2025-09-12T14:30:00Z", "source": "seed"}
+  ]
+}

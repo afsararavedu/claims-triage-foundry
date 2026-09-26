@@ -1,0 +1,17 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    { "name": "Demo (mock, scripted)", "type": "debugpy", "request": "launch", "module": "claims_triage",
+      "args": ["demo"], "cwd": "${workspaceFolder}", "envFile": "${workspaceFolder}/.env", "console": "integratedTerminal" },
+    { "name": "Chat (interactive HITL)", "type": "debugpy", "request": "launch", "module": "claims_triage",
+      "args": ["chat"], "cwd": "${workspaceFolder}", "envFile": "${workspaceFolder}/.env", "console": "integratedTerminal" },
+    { "name": "Triage extended batch", "type": "debugpy", "request": "launch", "module": "claims_triage",
+      "args": ["triage", "data/claims_extended.json"], "cwd": "${workspaceFolder}", "envFile": "${workspaceFolder}/.env", "console": "integratedTerminal" },
+    { "name": "Demo on Azure AI Foundry", "type": "debugpy", "request": "launch", "module": "claims_triage",
+      "args": ["--backend", "foundry", "demo"], "cwd": "${workspaceFolder}", "envFile": "${workspaceFolder}/.env", "console": "integratedTerminal" },
+    { "name": "Failure-mode demo", "type": "debugpy", "request": "launch", "module": "claims_triage",
+      "args": ["--hitl", "auto", "triage"], "cwd": "${workspaceFolder}", "envFile": "${workspaceFolder}/.env",
+      "env": { "TRIAGE_FAULT_INJECTION": "assess_fraud_indicators:1,agent.adjuster_briefing:2" }, "console": "integratedTerminal" },
+    { "name": "Tests", "type": "debugpy", "request": "launch", "module": "pytest", "args": ["-q"], "cwd": "${workspaceFolder}", "console": "integratedTerminal" }
+  ]
+}

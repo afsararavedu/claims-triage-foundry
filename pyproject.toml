@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "claims-triage-foundry"
+version = "1.0.0"
+description = "Multi-agent insurance claims triage assistant on Azure AI Foundry (supervisor + 3 specialists)"
+requires-python = ">=3.10"
+dependencies = [
+  "azure-ai-agents>=1.1.0,<2",
+  "azure-identity>=1.17",
+  "jsonschema>=4.21",
+  "python-dotenv>=1.0",
+]
+
+[project.optional-dependencies]
+tracing = ["opentelemetry-sdk>=1.25", "azure-ai-projects>=1.0.0", "azure-monitor-opentelemetry>=1.6"]
+dev = ["pytest>=8"]
+
+[project.scripts]
+claims-triage = "claims_triage.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

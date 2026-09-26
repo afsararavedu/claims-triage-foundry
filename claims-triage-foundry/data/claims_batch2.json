@@ -1,0 +1,4 @@
+[
+  {"claim_id": "C-2050", "policy_number": "POL-5521", "claim_type": "water_damage", "loss_date": "2026-09-10", "report_date": "2026-09-11", "claim_amount": 3000, "description": "Dishwasher leak under kitchen floor"},
+  {"claim_id": "C-2051", "policy_number": "POL-7002", "claim_type": "glass", "loss_date": "2026-09-12", "report_date": "2026-09-12", "claim_amount": 380, "description": "Side mirror glass cracked"}
+]

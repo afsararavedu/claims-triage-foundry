@@ -1,0 +1,13 @@
+# Core: Azure AI Foundry Agent Service SDK (classic threads/runs API) + auth
+azure-ai-agents>=1.1.0,<2
+azure-identity>=1.17
+jsonschema>=4.21
+python-dotenv>=1.0
+
+# Observability (optional but recommended): OpenTelemetry + export to the Foundry project's App Insights
+opentelemetry-sdk>=1.25
+azure-ai-projects>=1.0.0
+azure-monitor-opentelemetry>=1.6
+
+# Tests
+pytest>=8

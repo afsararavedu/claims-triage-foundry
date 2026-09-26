@@ -1,0 +1,14 @@
+[
+  {"claim_id": "C-2031", "policy_number": "POL-5521", "claim_type": "water_damage", "loss_date": "2026-08-15", "report_date": "2026-08-16", "claim_amount": 8500, "description": "Pipe burst in kitchen"},
+  {"claim_id": "C-2032", "policy_number": "POL-5521", "claim_type": "water_damage", "loss_date": "2026-02-10", "report_date": "2026-02-12", "claim_amount": 4200, "description": "Basement flooding"},
+  {"claim_id": "C-2033", "policy_number": "POL-9981", "claim_type": "theft", "loss_date": "2026-08-30", "report_date": "2026-08-30", "claim_amount": 25000, "description": "Jewelry theft, filed 3 days after policy start"},
+  {"claim_id": "C-2034", "policy_number": "POL-4410", "claim_type": "fire", "loss_date": "", "report_date": "2026-08-20", "claim_amount": 0, "description": "Missing loss date and amount - flag"},
+  {"claim_id": "C-2035", "policy_number": "POL-7002", "claim_type": "collision", "loss_date": "2026-07-04", "report_date": "2026-07-05", "claim_amount": 3100, "description": "Rear-ended at traffic light, bumper damage"},
+  {"claim_id": "C-2036", "policy_number": "PL-77", "claim_type": "fire", "loss_date": "2026-08-01", "report_date": "2026-08-02", "claim_amount": 1200, "description": "Small kitchen fire"},
+  {"claim_id": "C-2037", "policy_number": "POL-5521", "claim_type": "wind", "loss_date": "2026-08-25", "report_date": "2026-08-18", "claim_amount": 2600, "description": "Storm damage to fence (loss date after report date)"},
+  {"claim_id": "C-2038", "policy_number": "POL-5521", "claim_type": "collision", "loss_date": "2026-06-11", "report_date": "2026-06-12", "claim_amount": 5400, "description": "Car damage claimed on a homeowners policy"},
+  {"claim_id": "C-2039", "policy_number": "POL-7002", "claim_type": "comprehensive", "loss_date": "2026-09-01", "report_date": "2026-09-03", "claim_amount": 16800, "description": "Hail damage to vehicle roof and hood"},
+  {"claim_id": "C-2037", "policy_number": "POL-7002", "claim_type": "glass", "loss_date": "2026-07-20", "report_date": "2026-07-21", "claim_amount": 450, "description": "Windshield chip (re-uses claim id C-2037)"},
+  {"claim_id": "C-2040", "policy_number": "POL-3307", "claim_type": "vandalism", "loss_date": "2026-03-02", "report_date": "2026-05-20", "claim_amount": 3900, "description": "Graffiti on garage door, reported late"},
+  {"claim_id": "C-2041", "policy_number": "POL-3307", "claim_type": "fire", "loss_date": "2026-04-10", "report_date": "2026-04-11", "claim_amount": "twelve thousand", "description": "Malformed amount field"}
+]

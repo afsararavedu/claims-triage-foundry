@@ -1,0 +1,5 @@
+claim_id,policy_number,claim_type,loss_date,report_date,claim_amount,description
+C-2031,POL-5521,water_damage,2026-08-15,2026-08-16,8500,Pipe burst in kitchen
+C-2032,POL-5521,water_damage,2026-02-10,2026-02-12,4200,Basement flooding
+C-2033,POL-9981,theft,2026-08-30,2026-08-30,25000,"Jewelry theft, filed 3 days after policy start"
+C-2034,POL-4410,fire,,2026-08-20,0,Missing loss date and amount - flag
